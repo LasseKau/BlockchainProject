@@ -3,7 +3,16 @@
 const Blockchain = require('./blockchain');
 
 const bitcoin = new Blockchain();
-bitcoin.createNewBlock(4234, '54FGD534TTTRE', 'V435THYGRGFDGD');
-bitcoin.createNewBlock(4264, '54FGD534TTHBE', 'V435THYG56FDGD');
-bitcoin.createNewBlock(4204, '54FGD534H7TRE', 'V435THYUJYTGGD');
-console.log(bitcoin);
+
+bitcoin.createNewBlock(6542, 'FDSFSDFSDF434', '34FDRSEDFSDFSD');
+
+bitcoin.createNewTransaction(100, 'ALEX543JHLFDSFD', 'JEN435FDFDSFG');
+
+bitcoin.createNewBlock(7421, '54DSDFSDF4', '84FD654EDFSDFD');
+
+bitcoin.createNewTransaction(100, 'ALEX543JHLFDSFD', 'JEN435FDFDSFG');
+bitcoin.createNewTransaction(100, 'ALEX543JHLFDSFD', 'JEN435FDFDSFG');
+bitcoin.createNewTransaction(100, 'ALEX543JHLFDSFD', 'JEN435FDFDSFG');
+
+
+console.log(bitcoin.chain[1]);
