@@ -14,5 +14,7 @@ bitcoin.createNewTransaction(100, 'ALEX543JHLFDSFD', 'JEN435FDFDSFG');
 bitcoin.createNewTransaction(100, 'ALEX543JHLFDSFD', 'JEN435FDFDSFG');
 bitcoin.createNewTransaction(100, 'ALEX543JHLFDSFD', 'JEN435FDFDSFG');
 
+bitcoin.createNewBlock(74421, '54DSDFJHF4', 'G4FD65456FSDFD');
 
-console.log(bitcoin.chain[1]);
+
+console.log(bitcoin.chain[2]);
