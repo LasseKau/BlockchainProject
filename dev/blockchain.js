@@ -5,6 +5,8 @@ class Blockchain {
     constructor() {
         this.chain = [];
         this.pendingTransactions = []; //non validated transactions. they get validated when we create a new block.  
+
+        this.createNewBlock(100, '0', '0'); //genesis block creation
     }
 }
 

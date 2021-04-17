@@ -23,9 +23,11 @@ const currentBlockData = [
 
 ];
 
+console.log(bitcoin);
+
 // //logs nonce, 30250 tries
 //console.log(bitcoin.proofOfWork(previousBlockHash, currentBlockData) + " attempts");
 
-//testing with the nonce from the previous log, our hash should start with 0000
+//veryfy with the nonce from the previous log, our hash should start with 0000
 //console.log(bitcoin.hashBlock(previousBlockHash, currentBlockData, 30250));
 
