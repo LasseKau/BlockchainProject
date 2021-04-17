@@ -7,8 +7,8 @@ app.get('/blockchain', (req, res) => {
 });
 
 app.post('/transaction', function (req, res) {
-    res.send('it works!');
-    console.log("post:");
+    console.log(req.body);
+    res.send('the amount of the transaction is {req.body.amount} bitcoin.');
 });
 
 app.get('/mine', function (req, res) {
@@ -16,5 +16,5 @@ app.get('/mine', function (req, res) {
 });
 
 app.listen(port, () => {
-    console.log(`Example app listetning at http://localhost:${port}`)
+    console.log(`Example app listening at http://localhost:${port}`)
 })
