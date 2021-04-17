@@ -1,20 +1,27 @@
 //testing create block method
 
 const Blockchain = require('./blockchain');
-
 const bitcoin = new Blockchain();
 
-bitcoin.createNewBlock(6542, 'FDSFSDFSDF434', '34FDRSEDFSDFSD');
+const previousBlockHash = 'GFD6543333453354';
+const currentBlockData = [
+    {
+        amount: 10,
+        sender: 'HGF46554654G',
+        recipient: 'GH45666FGDG'
+    },
+    {
+        amount: 15,
+        sender: '5HGF4544654G',
+        recipient: 'GH45667FGDG'
+    },
+    {
+        amount: 10,
+        sender: 'H5UGF46556TG4G',
+        recipient: 'GGFFG5667FGDG'
+    },
 
-bitcoin.createNewTransaction(100, 'ALEX543JHLFDSFD', 'JEN435FDFDSFG');
+];
 
-bitcoin.createNewBlock(7421, '54DSDFSDF4', '84FD654EDFSDFD');
-
-bitcoin.createNewTransaction(100, 'ALEX543JHLFDSFD', 'JEN435FDFDSFG');
-bitcoin.createNewTransaction(100, 'ALEX543JHLFDSFD', 'JEN435FDFDSFG');
-bitcoin.createNewTransaction(100, 'ALEX543JHLFDSFD', 'JEN435FDFDSFG');
-
-bitcoin.createNewBlock(74421, '54DSDFJHF4', 'G4FD65456FSDFD');
-
-
-console.log(bitcoin.chain[2]);
+const nonce = 100;
+console.log(bitcoin.hashBlock(previousBlockHash, currentBlockData, nonce));

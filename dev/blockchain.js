@@ -1,3 +1,5 @@
+const sha256 = require('sha256');
+
 //data structure
 class Blockchain {
     constructor() {
@@ -40,5 +42,29 @@ Blockchain.prototype.createNewTransaction = function (amount, sender, recipient)
 
     return this.getLastBlock()['index'] + 1; //index of the last block in chain 
 }
+//take in block from blockchain and hash block into fix lenghth string 
+Blockchain.prototype.hashBlock = function (previousBlockHash, currentBlockData, nonce) { //data we are hashing inside hash block
+    const dataAsString = previousBlockHash + nonce.toString() + JSON.stringify(currentBlockData); //json.stringfy turns our data into a string
+    const hash = sha256(dataAsString);
+    return hash;
+}
+
+// proof of work: repeatedly hashing block until we find right hash, any hash that starts with 0000.
+// we are gonna change input to hashBlock method byt constantly incramenting nonce value. first time we run hashblock method, we are gonna start with nonce zero. 
+// if resulting hash does not start with 0000, we are going to run our hashblock method again with nonce of 1,2,3 etc until hash starts with 0000.
+// proof of work secures blockchain. If someone want to change a block,remining a block of data is not feasable due to the amount of computing it takes + they would have to do the same with the previous blocks. 
+
+Blockchain.prototype.proofOfWork = function (previousBlockHash, currentBlockData) {
+    let nonce = 0;
+    let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+    while (hash.substring(0, 4) !== '0000') {
+        nonce++;
+        hash = this.hashBlock(previousBlockHash, currentBlockData, nonce); //running hashblock method again with nonce 1
+    }
+
+    return nonce;
+}
+
+
 
 module.exports = Blockchain;
