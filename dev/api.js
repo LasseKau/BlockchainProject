@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const port = 3002;
+const blockchain = require('./blockchain');
+const bitcoin = new blockchain();
 //const bodyParser = require('body-parser');
 
 app.use(express.json());
@@ -8,7 +10,7 @@ app.use(express.urlencoded({ extended: false }));
 
 
 app.get('/blockchain', (req, res) => {
-
+    res.send(bitcoin);
 });
 
 app.post('/transaction', function (req, res) {
