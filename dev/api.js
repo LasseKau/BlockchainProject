@@ -27,7 +27,7 @@ app.post('/transaction', function (req, res) {
 //mining a new block using proof of work
 app.get('/mine', function (req, res) {
     const lastBlock = bitcoin.getLastBlock();
-    const previousBlock = lastBlock ['hash'];
+    const previousBlockHash = lastBlock ['hash'];
     const currentBlockData = {
         transactions: bitcoin.pendingTransactions,
         index: lastBlock['index'] + 1
