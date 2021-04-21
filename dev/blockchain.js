@@ -1,9 +1,12 @@
 const sha256 = require('sha256');
+const currentNodeUrl = process.argv[3];
 
 //data structure
 class Blockchain {
     constructor() {
         this.chain = [];
+        this.currentNodeUrl = currentNodeUrl;
+        this.networkNodes = [];
         this.pendingTransactions = []; //non validated transactions. they get validated when we create a new block.  
 
         this.createNewBlock(100, '0', '0'); //genesis block creation
