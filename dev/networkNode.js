@@ -10,6 +10,7 @@ const bitcoin = new blockchain();
 //const uuid = require('uuid/v1');
 const { v1: uuid } = require('uuid');
 const { post } = require('request-promise');
+const requestPromises = require('request-promise');
 //import { v1 as uuidv1 } from 'uuid';
 const nodeAdress = uuid().split('-').join(''); //removing dashes from string
 
@@ -20,10 +21,38 @@ app.use(express.urlencoded({ extended: false }));
 app.get('/blockchain', (req, res) => {
     res.send(bitcoin);
 });
-//in out post transaction end ´point, we are creating a new transaction
+//in out post transaction endpoint, we are creating a new transaction
+//23.4 update: the only time we are hitting this transaction endpoint is during broadcast  in trnasaction and broadcast endpoint
 app.post('/transaction', function (req, res) {
-    const blockIndex = bitcoin.createNewTransaction(req.body.amount, req.body.sender, req.body.recipient);
-    res.json({note: `Transaction will be added in block ${blockIndex}`});
+    const newTransaction = req.body;
+    const blockIndex = bitcoin.addTransactionToPendingTransactions(newTransaction);
+    res.json({note: `Transaction will be added in ${blockIndex}`});
+});
+
+//create a new and broadcast transaction to other nodes
+app.post('/transaction/broadcast', function(req,res){
+    const newTransaction = bitcoin.createNewTransaction(req.body.amount, req,body.sender,req.body.recipient);
+    bitcoin.addTransactionToPendingTransactions(newTransaction);
+
+    //creating an array of promises
+    const requestPromises = [];
+    bitcoin.networkNodes.forEach(networkNodeUrl => {
+        const requestOptions = {
+            url: networkNodeUrl = '/transaction',
+            method: 'POST',
+            body: newTransaction,
+            json: true
+        };
+        //lets make request using request body library
+        //after forloop has ran, we should have requests present inside request promises array
+        requestPromises.push(rp(requestOptions));
+    });
+    //running all requests
+    Promise.add(requestPromises)
+    //sending responce that says broadcast was succesful
+    .then(data => {
+        res.json({ note: 'Transaction created and broadcast succesfully'});
+    });
 });
 
 //mining a new block using proof of work
@@ -110,6 +139,8 @@ app.post('/register-nodes-bulk', function(req,res){
 
     res.json({note: 'Bulk registration complete...'});
 });
+
+
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
