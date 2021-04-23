@@ -59,8 +59,8 @@ app.get('/mine', function (req, res) {
     const lastBlock = bitcoin.getLastBlock();
     const previousBlockHash = lastBlock ['hash'];
     const currentBlockData = {
-        transactions: bitcoin.pendingTransactions,
-        index: lastBlock['index'] + 1
+		transactions: bitcoin.pendingTransactions,
+		index: lastBlock['index'] + 1
     };
     const nonce = bitcoin.proofOfWork(previousBlockHash, currentBlockData);
     const blockHash = bitcoin.hashBlock(previousBlockHash,currentBlockData, nonce);
