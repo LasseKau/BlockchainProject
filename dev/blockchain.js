@@ -55,7 +55,7 @@ Blockchain.prototype.createNewTransaction = function (amount, sender, recipient)
 Blockchain.prototype.addTransactionToPendingTransactions = function(transactionObject){
 
     this.pendingTransactions.push(transactionObject);
-    return this.getLastBlock()[index] + 1;
+    return this.getLastBlock()['index'] + 1;
 };
 
 //take in block from blockchain and hash block into fix lenghth string 

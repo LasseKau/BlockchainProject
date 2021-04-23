@@ -42,11 +42,11 @@ app.post('/transaction/broadcast', function(req, res) {
 			body: newTransaction,
 			json: true
 		};
-         //lets make request using request body library
-        //after forloop has ran, we should have requests present inside request promises array
+           //lets make request using request body library
+           //after forloop has ran, we should have requests present inside request promises array
 		requestPromises.push(rp(requestOptions));
 	});
-    //running all requests
+     //running all requests
 	Promise.all(requestPromises)
     //sending responce that says broadcast was succesful
 	.then(data => {
