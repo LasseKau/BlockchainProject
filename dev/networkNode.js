@@ -30,29 +30,28 @@ app.post('/transaction', function (req, res) {
 });
 
 //create a new and broadcast transaction to other nodes
-app.post('/transaction/broadcast', function(req,res){
-    const newTransaction = bitcoin.createNewTransaction(req.body.amount, req,body.sender,req.body.recipient);
-    bitcoin.addTransactionToPendingTransactions(newTransaction);
-
+app.post('/transaction/broadcast', function(req, res) {
+	const newTransaction = bitcoin.createNewTransaction(req.body.amount, req.body.sender, req.body.recipient);
+	bitcoin.addTransactionToPendingTransactions(newTransaction);
     //creating an array of promises
-    const requestPromises = [];
-    bitcoin.networkNodes.forEach(networkNodeUrl => {
-        const requestOptions = {
-            url: networkNodeUrl = '/transaction',
-            method: 'POST',
-            body: newTransaction,
-            json: true
-        };
-        //lets make request using request body library
+	const requestPromises = [];
+	bitcoin.networkNodes.forEach(networkNodeUrl => {
+		const requestOptions = {
+			uri: networkNodeUrl + '/transaction',
+			method: 'POST',
+			body: newTransaction,
+			json: true
+		};
+         //lets make request using request body library
         //after forloop has ran, we should have requests present inside request promises array
-        requestPromises.push(rp(requestOptions));
-    });
+		requestPromises.push(rp(requestOptions));
+	});
     //running all requests
-    Promise.add(requestPromises)
+	Promise.all(requestPromises)
     //sending responce that says broadcast was succesful
-    .then(data => {
-        res.json({ note: 'Transaction created and broadcast succesfully'});
-    });
+	.then(data => {
+		res.json({ note: 'Transaction created and broadcast successfully.' });
+	});
 });
 
 //mining a new block using proof of work
@@ -120,12 +119,12 @@ app.post('/register-and-broadcast-node', function(req,res){
 });
 
 //register a node with network. if all other nodes would broadcast as well, a severe crash would occur due to infinite loop
-app.post('/register-node', function(req,res){
-    const newNodeUrl = req.body.newNodeUrl;
-    const nodeNotAlreadyPresent = bitcoin.networkNodes.indexOf(newNodeUrl) == -1;
-    const notCurrentNode = bitcoin.currentNodeUrl != newNodeUrl;
-    if(nodeNotAlreadyPresent && notCurrentNode) bitcoin.networkNodes.push(newNodeUrl);
-    res.json({note:'New node node registered succesfyully'});
+app.post('/register-node', function(req, res) {
+	const newNodeUrl = req.body.newNodeUrl;
+	const nodeNotAlreadyPresent = bitcoin.networkNodes.indexOf(newNodeUrl) == -1;
+	const notCurrentNode = bitcoin.currentNodeUrl !== newNodeUrl;
+	if (nodeNotAlreadyPresent && notCurrentNode) bitcoin.networkNodes.push(newNodeUrl);
+	res.json({ note: 'New node registered successfully.' });
 });
 
 //register multiple nodes at once. accepts data from all urls already in the network
@@ -139,6 +138,8 @@ app.post('/register-nodes-bulk', function(req,res){
 
     res.json({note: 'Bulk registration complete...'});
 });
+
+
 
 
 
